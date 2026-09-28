@@ -17,7 +17,7 @@ The brief mentions four length choices but names three. This implementation uses
 
 ## Open or run
 
-For a quick look, open `dist/index.html` in a modern browser. All three photos and audio recordings are bundled in `dist/assets`; no streaming connection is required.
+For a quick look, open `dist/index.html` in a modern browser. All five scene photos and the audio recordings are bundled in `dist/assets`; no streaming connection is required.
 
 For desktop notification support, serve the page on localhost or HTTPS:
 
@@ -26,7 +26,7 @@ cd activity-1
 python3 -m http.server 8080 --directory dist
 ```
 
-Open http://localhost:8080. No build step, npm installation, or API keys are required. Python is only used to serve the files. Alternatively, serve `dist` with any static web server.
+Open http://localhost:8080. Use a current browser supporting Web Locks (such as current Chrome, Edge, Firefox, or Safari) on localhost or HTTPS for the tracked timer. No build step, npm installation, or API keys are required. Python is only used to serve the files. Alternatively, serve `dist` with any static web server.
 
 ## Use the page
 
@@ -34,14 +34,14 @@ Open http://localhost:8080. No build step, npm installation, or API keys are req
 2. Choose a break every 20 minutes, 40 minutes, or a custom interval (0.1–240 minutes).
 3. Enable desktop reminders and allow browser notifications if wanted.
 4. Click **Start my rhythm**. Leave this tab open while working elsewhere.
-5. Choose **Forest**, **Ocean**, or **Rain**. Each scene has a matching real recording: birdsong, ocean waves, or rainfall. Click **Play sound** to listen immediately and adjust **Volume**. **Stop sound** silences audio and disables automatic break audio until you press Play sound again.
+5. Choose **Forest**, **Ocean**, **Rain**, **Meadow**, or **Stream**. Scene audio includes birdsong, ocean waves, rainfall, and flowing water. Forest and Meadow share the birdsong recording. Click **Play sound** to listen immediately and adjust **Volume**. **Stop sound** silences audio and disables automatic break audio until you press Play sound again.
 6. At break time, the matching recording plays when sound is enabled. Briefly enjoy the scene, then look away from the screen.
 7. The next focus interval starts automatically after the break. Use **Pause timer**, **Take a break now**, or **Finish break** as needed.
 8. **Reset timer** stops the timer and returns to a full focus interval, keeping your settings. Changing a setting also resets the timer so the new rhythm starts clearly.
 
 Timers use elapsed wall-clock time to reduce drift. Browsers can throttle or suspend background tabs, and computer sleep delays delivery. The app checks the timer when execution resumes. Reminders cannot run after the page is closed. System notification appearance, sound, and delivery depend on browser permissions, operating-system settings, and Do Not Disturb. Notifications show text; the scene and relaxing audio stay on the web page. No background push server is included.
 
-Sound starts only after a page interaction, in accordance with browser autoplay rules. Preferences and timer state reset when the page reloads. This is a break-reminder activity, not a treatment or diagnostic tool.
+Sound starts only after a page interaction, in accordance with browser autoplay rules. Preferences and timer state reset when the page reloads; recorded history stays in this browser. This is a break-reminder activity, not a treatment or diagnostic tool.
 
 ## Files
 
@@ -49,6 +49,8 @@ Sound starts only after a page interaction, in accordance with browser autoplay 
 - `dist/style.css`: green palette and responsive layout
 - `dist/app.js`: countdown, break cycle, scene selection, real audio playback, and optional desktop notifications
 - `dist/assets/`: bundled JPG scenes and MP3 nature recordings
+- `dist/history.js`: local date grouping and persistent duration totals
+- `tests/history.test.mjs`: timer, history, and date-boundary checks
 - `.openai/hosting.json`: Sites deployment configuration
 
 ## AI tool used
@@ -83,6 +85,47 @@ If you cannot hear audio, click **Play sound**, set the page volume above zero, 
 > Make the natural sound in the page can be really be heard and match the scenes displayed.
 
 Implemented: updated name, three scene choices, real local audio recordings matched to the scenes, immediate playback controls, volume control, and playback/error status.
+
+## Time history and eye-care update
+
+The page now has five scenes, a day/week/month time summary with previous-period navigation, and an explanation of the 20-20-20 rule. The one-click **Use the 20-20-20 rhythm** control sets a 20-second break every 20 minutes and leaves the timer ready to start. During the break, look at a real object about 20 feet (6 metres) away, rather than continuing to watch the scene.
+
+### What is recorded
+
+- Only running focus and break intervals are counted. Focus time is an estimate of screen use; the page cannot observe other apps, eye gaze, or whether a break was actually taken.
+- Pausing, resetting, closing, or reloading stops tracking. Resetting keeps history. Past sessions from earlier versions cannot be recovered.
+- History is saved to localStorage in this browser on this device, under `pause-and-break-history-v1`. It is not uploaded to GitHub or a server. Clearing browser/site data removes it. Different browsers, devices, or origins (including localhost versus a published site) have separate histories.
+- Weeks run Monday–Sunday; months follow the local calendar. Sessions crossing midnight are split into the correct local dates, including daylight-saving changes.
+- Only one timer can run per origin at once, using Web Locks to avoid duplicate counts across tabs.
+- Gaps over 90 seconds between timer checks, or backwards clock changes, pause tracking and exclude the unobserved gap. Shorter suspension or idle gaps may still count, so this is not a precise device screen-time monitor. A delayed break starts when the page can run again; it is not backdated.
+- History is saved every five seconds and on timer actions or page hide. Abrupt browser termination may lose the latest unsaved seconds. If browser storage is blocked or full, the timer still works with in-memory history and shows a notice.
+
+### Additional assets
+
+- Meadow: [Hero Ding](https://unsplash.com/photos/HC5pVT_rBno), Unsplash License. Paired with the existing Diana Tudor birdsong (CC BY 4.0).
+- Stream: [Eric Muhr](https://unsplash.com/photos/qMMpyTwBQBA), Unsplash License.
+- Stream audio: [Forest lawn creek — Dsw4](https://commons.wikimedia.org/wiki/File:Forest_lawn_creek.ogg), public domain. Adapted to a 60-second excerpt with volume normalization, peak limiting, and brief fades.
+
+### Eye-care sources
+
+The page explains the goal of regular breaks, changing focus, blinking, and reducing dry environmental exposure. It does not claim that breaks cure dry eye or meibomian gland dysfunction, and encourages following professional eye-care advice.
+
+- [American Academy of Ophthalmology: screen breaks and the 20-20-20 rule](https://www.aao.org/eye-health/tips-prevention/should-you-be-worried-about-blue-light)
+- [National Eye Institute: Dry Eye](https://www.nei.nih.gov/eye-health-information/eye-conditions-and-diseases/dry-eye)
+
+### Selected follow-up prompt
+
+“Add two more natural scenes; add an area tracking screen time and break duration for each day/week/month; explain the benefits of the 20-20-20 rule and eye-protection tips.”
+
+### Optional verification
+
+With Node.js installed, run from `activity-1`:
+
+```sh
+TZ=America/New_York node tests/history.test.mjs
+```
+
+Checks cover focus/rest accounting, pauses, reset, reload persistence, cross-tab exclusion, scene/audio mapping, inactive gaps, local midnight, week/month boundaries, leap years, daylight-saving time, and unavailable or invalid storage.
 
 ## My reflection
 
