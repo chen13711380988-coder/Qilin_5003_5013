@@ -127,6 +127,17 @@ TZ=America/New_York node tests/history.test.mjs
 
 Checks cover focus/rest accounting, pauses, reset, reload persistence, cross-tab exclusion, scene/audio mapping, inactive gaps, local midnight, week/month boundaries, leap years, daylight-saving time, and unavailable or invalid storage.
 
+## Rotating eye-rest messages
+
+The scene starts with “Give your eyes a moment to rest.” Each new break advances to the next message, then loops through all four:
+
+- Give your eyes a moment to rest.
+- Pause your screen. Rest your eyes.
+- A little break for your hardworking eyes.
+- Look away, blink gently, and relax your eyes.
+
+Both scheduled breaks and **Take a break now** advance the message. Pausing/resuming, changing scenes, and resetting do not advance it. Reloading starts the sequence again. The distance reminder remains visible separately during breaks.
+
 ## My reflection
 
 <!-- Write your own short reflection here. -->

@@ -1,9 +1,16 @@
 'use strict';
 const $=id=>document.getElementById(id);
+const eyeRestMessages = [
+  'Give your eyes a moment to rest.',
+  'Pause your screen. Rest your eyes.',
+  'A little break for your hardworking eyes.',
+  'Look away, blink gently, and relax your eyes.'
+];
+let eyeRestMessageIndex = 0;
 let length=20,frequency=20,phase='focus',running=false,remaining=1200000,deadline=0,sound=true,reminders=false;
 function message(text){$('message').textContent=text}
 function duration(){return (phase==='rest'?length:frequency*60)*1000}
-function render(){const seconds=Math.max(0,Math.ceil(remaining/1000));$('time').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;document.title=running?`${$('time').textContent} · ${phase==='rest'?'Rest':'Focus'} — Pause and Break`:'Pause and Break — A little space for your eyes';$('phase').textContent=phase==='rest'?'A MOMENT JUST FOR YOU':running?'YOUR NEXT MOMENT OF STILLNESS':'READY WHEN YOU ARE';$('guidance').textContent=phase==='rest'?'Look about 20 feet (6 metres) away. Blink gently and listen.':'A small pause can fit into a busy day.';$('start').innerHTML=running?'Pause timer <span>Ⅱ</span>':` ${remaining===duration()?'Start my rhythm':'Resume timer'} <span>→</span>`;$('breakNow').textContent=phase==='rest'?'Finish break':'Take a break now';document.body.classList.toggle('resting',phase==='rest');$('schedule').textContent=`${length===60?'1 minute':length+' seconds'} of rest, every ${frequency} ${frequency===1?'minute':'minutes'}.`}
+function render(){const seconds=Math.max(0,Math.ceil(remaining/1000));$('time').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;document.title=running?`${$('time').textContent} · ${phase==='rest'?'Rest':'Focus'} — Pause and Break`:'Pause and Break — A little space for your eyes';$('phase').textContent=phase==='rest'?'A MOMENT JUST FOR YOU':running?'YOUR NEXT MOMENT OF STILLNESS':'READY WHEN YOU ARE';$('guidance').textContent=eyeRestMessages[eyeRestMessageIndex];$('sceneHint').textContent=phase==='rest'?'Look about 20 feet (6 metres) away.':'A quiet place to come back to.';$('start').innerHTML=running?'Pause timer <span>Ⅱ</span>':` ${remaining===duration()?'Start my rhythm':'Resume timer'} <span>→</span>`;$('breakNow').textContent=phase==='rest'?'Finish break':'Take a break now';document.body.classList.toggle('resting',phase==='rest');$('schedule').textContent=`${length===60?'1 minute':length+' seconds'} of rest, every ${frequency} ${frequency===1?'minute':'minutes'}.`}
 const scenes = {
   forest: { title:'Forest birds', sound:'Birdsong', alt:'Lush green forest reflected in the calm waters of Brohm Lake', photographer:'Bryce Evans', credit:'https://unsplash.com/photos/choc7LYd98I' },
   ocean: { title:'Ocean waves', sound:'Waves on the shore', alt:'Turquoise waves rolling onto a sandy beach', photographer:'James Park', credit:'https://unsplash.com/photos/mJ2Rsa_Btsw' },
@@ -87,6 +94,7 @@ function accountTime(){
 }
 async function enterRest(){
   if(running)accountTime();if(!await acquireTimer())return;
+  eyeRestMessageIndex=(eyeRestMessageIndex+1)%eyeRestMessages.length;
   phase='rest';running=true;remaining=duration();lastAccount=Date.now();deadline=lastAccount+remaining;
   void playSound();notifyBreak();saveHistory();message('Your break has begun. Look into the distance, away from the screen.');render();
 }
