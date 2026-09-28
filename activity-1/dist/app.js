@@ -73,7 +73,7 @@ function renderHistory(){
   for(const [id,width] of [['focusBar',focusPercent],['restBar',restPercent],['totalFocusBar',focusPercent],['totalRestBar',restPercent]])$(id).setAttribute('style',`width:${width}%`);
   $('chartMidpoint').textContent=totalSeconds?timeLabel(totalSeconds*500):'—';$('chartMaximum').textContent=totalSeconds?timeLabel(totalSeconds*1000):'—';
   const format={month:'short',day:'numeric',year:'numeric'},last=new Date(range.end);last.setDate(last.getDate()-1);
-  $('periodLabel').textContent=summaryMode==='month'?range.start.toLocaleDateString(undefined,{month:'long',year:'numeric'}):summaryMode==='week'?`${range.start.toLocaleDateString(undefined,format)} – ${last.toLocaleDateString(undefined,format)}`:range.start.toLocaleDateString(undefined,{weekday:'long',...format});
+  $('periodLabel').textContent=summaryMode==='month'?range.start.toLocaleDateString('en-US',{month:'long',year:'numeric'}):summaryMode==='week'?`${range.start.toLocaleDateString('en-US',format)} – ${last.toLocaleDateString('en-US',format)}`:range.start.toLocaleDateString('en-US',{weekday:'long',...format});
   $('nextPeriod').disabled=summaryOffset>=0;$('currentPeriod').hidden=summaryOffset===0;
   $('historyEmpty').hidden=totals.focus+totals.rest>0;$('historyEmpty').textContent=summaryOffset===0?'No time recorded yet. Start your rhythm above to begin.':'No time recorded in this period.';
   $('historyRows').replaceChildren();
