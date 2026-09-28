@@ -68,6 +68,10 @@ function timeLabel(ms){const seconds=Math.floor(ms/1000),hours=Math.floor(second
 function renderHistory(){
   const range=PauseHistory.period(summaryMode,summaryOffset),totals=tracker.totals(range.days);
   $('focusTotal').textContent=timeLabel(totals.focus);$('restTotal').textContent=timeLabel(totals.rest);$('trackedTotal').textContent=timeLabel((Math.floor(totals.focus/1000)+Math.floor(totals.rest/1000))*1000);
+  const focusSeconds=Math.floor(totals.focus/1000),restSeconds=Math.floor(totals.rest/1000),totalSeconds=focusSeconds+restSeconds;
+  const focusPercent=totalSeconds?focusSeconds/totalSeconds*100:0,restPercent=totalSeconds?restSeconds/totalSeconds*100:0;
+  for(const [id,width] of [['focusBar',focusPercent],['restBar',restPercent],['totalFocusBar',focusPercent],['totalRestBar',restPercent]])$(id).setAttribute('style',`width:${width}%`);
+  $('chartMidpoint').textContent=totalSeconds?timeLabel(totalSeconds*500):'—';$('chartMaximum').textContent=totalSeconds?timeLabel(totalSeconds*1000):'—';
   const format={month:'short',day:'numeric',year:'numeric'},last=new Date(range.end);last.setDate(last.getDate()-1);
   $('periodLabel').textContent=summaryMode==='month'?range.start.toLocaleDateString(undefined,{month:'long',year:'numeric'}):summaryMode==='week'?`${range.start.toLocaleDateString(undefined,format)} – ${last.toLocaleDateString(undefined,format)}`:range.start.toLocaleDateString(undefined,{weekday:'long',...format});
   $('nextPeriod').disabled=summaryOffset>=0;$('currentPeriod').hidden=summaryOffset===0;

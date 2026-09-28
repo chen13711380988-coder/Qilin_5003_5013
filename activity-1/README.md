@@ -138,6 +138,10 @@ The scene starts with “Give your eyes a moment to rest.” Each new break adva
 
 Both scheduled breaks and **Take a break now** advance the message. Pausing/resuming, changing scenes, and resetting do not advance it. Reloading starts the sequence again. The distance reminder remains visible separately during breaks.
 
+## Time-summary bar chart
+
+The day/week/month summary uses three horizontal bars: screen/focus time, break time, and total recorded time. All bars share a scale; the total bar combines the same focus and break colors to show that it is their sum, not additional time. Exact duration labels remain readable even for very short breaks. Empty periods show empty tracks, and the daily table is available under **View daily breakdown**. Displayed values use whole seconds.
+
 ## My reflection
 
 <!-- Write your own short reflection here. -->
