@@ -1,10 +1,10 @@
 # Activity 1 — Pause and Break
 
-A green, nature-inspired screen-break timer for students and office workers who want short breaks from screen time.
+A green, nature-inspired screen-break timer for students and office workers who want short breaks from screen time for eye health..
 
 ## My original idea
 
-> Let’s use file activity 1 for doing this activity. In this activity, please design a page for people (students or officers that suffer from dry eye issues) who need a quick break from long screen time where they choose how often and how much time they need to take a break from screen time.
+> Design a page for people (students or officers that suffer from dry eye issues) who need a quick break from long screen time where they choose how often and how much time they need to take a break from screen time.
 >
 > Main interaction: When someone selects a break length, how often they should take a break from screen time, the experience should display a natural scene with comfortable or relaxed audio that reminds people they should take a break. This experience can both show on the website page and be a pop-up notification that appears on the notification section on the computer when people are browsing other websites or apps.
 >
