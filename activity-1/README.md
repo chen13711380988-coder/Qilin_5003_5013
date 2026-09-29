@@ -172,8 +172,18 @@ The current project includes all of these requested updates:
 
 The maintained project folder is **`activity-1`**. It is connected to [Qilin_5003_5013 on GitHub](https://github.com/chen13711380988-coder/Qilin_5003_5013/tree/main/activity-1), on the `main` branch. Use this folder for the current source, README, tests, and bundled assets. The repository's top-level README is separate from this project README.
 
-Time-history records are browser data, not source files, and are intentionally not uploaded to GitHub. The reflection below remains for the project author to write.
+Time-history records are browser data, not source files, and are intentionally not uploaded to GitHub. The reflection below was written by the project author.
 
 ## My reflection
 
-<!-- Write your own short reflection here. -->
+Firstly, I expect the page to help users remind themselves to relax their eyes and take a break from screen time, so the whole page may convey the theme of eye relaxation while keeping its timer on. But the first version it generated was more like a break-and-work timer that may ask people to stop working, which doesn’t match my ideas well. But all the features it generated work well, as I expected. I think that happens because my initial prompts only clearly described the features that I want to have on the page; I didn’t state my value, my position, and why I chose to design this page very clearly. So after testing the page, I make a more detailed statement about my value and background, I clarify the page’s extended experience more clearly, and I also add more sections to extend features (like statistics bar for time recording and tops section) on my page to make it more useful as a website that can be beneficial to keep eyes healthy.
+
+Secondly, I noticed that AI always makes extensions based on my ideas. I didn’t ask AI to generate many texts on the scene that displayed on my page. But AI generates many texts by itself to enrich the content of the page, and most of the text doesn’t match the theme of the page very well, so I changed some texts.
+
+In addition, I expect the page to be in English. However, while all texts are in English, the “date” selection button on the page is in Chinese. Initially, I provide the prompts that only includes features that I want to have on the page, I didn’t ask AI to generate many texts on the scene that displayed on my page. But AI generates many texts by itself to enrich the content of the page, and most of the text doesn’t match the theme of the page very well, so I change some texts. For example, I change the text from "A small pause can fit into a busy day." to four sentences that rotate in order each time a new break starts, to better match my ideas.
+
+In addition, I expect AI to add an area that tracks and shows users’ screen time and break time to let users better know about their screen time and their eyes' relaxation condition in a direct way. After testing the page, I found that what I got has clear basic information, but the visuals don’t match what I want. It simply shows all times in text, which I think is too boring and makes users not want to browse it. So I asked AI to change it and show those times in an aesthetic bar chart, which allows users to track and compare their screen time and break time each day, week, and month.
+
+What remains uncertain is that I don’t know how I can let my page turn into a small pop-up window on the desktop like a widget on a user's desktop when users open "Desktop Reminder" on the page. Currently, what I got from AI is a regular pop-up notification when it times out. I have difficulty clearly describing what I really need to develop the feature I want.
+
+Overall, based on my experience using experience, I think AI can have wonderful execution when I have very clear prompts with reasonable logic, specific descriptions, and details. If my own values, and requirements misses some important information, the output from AI always need to be revised since its AI’s own execution may not always match our idea.
