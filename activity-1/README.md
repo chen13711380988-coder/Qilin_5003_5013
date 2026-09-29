@@ -51,7 +51,8 @@ Sound starts only after a page interaction, in accordance with browser autoplay 
 - `dist/assets/`: bundled JPG scenes and MP3 nature recordings
 - `dist/history.js`: local date grouping and persistent duration totals
 - `tests/history.test.mjs`: timer, history, and date-boundary checks
-- `.openai/hosting.json`: Sites deployment configuration
+- `.gitignore`: excludes local system files and optional Sites metadata
+- `.openai/hosting.json` (local only, if present): optional Sites configuration; not needed to run the project and not included in GitHub
 
 ## AI tool used
 
@@ -84,7 +85,7 @@ If you cannot hear audio, click **Play sound**, set the page volume above zero, 
 > Make the natural scenes displayed on the screen can be changed by users' preferences.
 > Make the natural sound in the page can be really be heard and match the scenes displayed.
 
-Implemented: updated name, three scene choices, real local audio recordings matched to the scenes, immediate playback controls, volume control, and playback/error status.
+This first revision introduced the updated name, three scene choices, real local audio recordings, immediate playback controls, volume control, and playback/error status. The later update expanded the selection to five scenes, as described below.
 
 ## Time history and eye-care update
 
@@ -141,6 +142,37 @@ Both scheduled breaks and **Take a break now** advance the message. Pausing/resu
 ## Time-summary bar chart
 
 The day/week/month summary uses three horizontal bars: screen/focus time, break time, and total recorded time. All bars share a scale; the total bar combines the same focus and break colors to show that it is their sum, not additional time. Exact duration labels remain readable even for very short breaks. Empty periods show empty tracks, and the daily table is available under **View daily breakdown**. Displayed values use whole seconds.
+
+## Revision summary
+
+The current project includes all of these requested updates:
+
+| Update | Current behavior |
+| --- | --- |
+| Page name | The header and browser title use **Pause and Break**. |
+| Header cleanup | The “Activity 01” label is removed from the page header. |
+| Scene selection | Users can choose Forest, Ocean, Rain, Meadow, or Stream. |
+| Audible nature sound | Bundled real recordings match the setting, with Play/Stop controls and adjustable volume. |
+| Time history | Running focus and break intervals are stored locally, with day/week/month views and previous-period navigation. |
+| Eye-care information | The page explains its purpose, the 20-20-20 rule, practical eye-care tips, and links to sources. A button applies a 20-second break every 20 minutes. |
+| Rotating scene sentences | The four eye-rest messages listed above cycle whenever a new break starts. |
+| Countdown label | During a running focus interval, the label reads **“Your next pause for tired eyes”**, styled in uppercase. Idle and rest states retain their own labels. |
+| Bar chart | Screen time, break time, and their combined total appear on a shared scale with exact duration labels. The daily breakdown remains available. |
+| English interface | Page text is in English. Day, week, and month headings explicitly use the `en-US` locale regardless of browser language; dates are still grouped using local time. The daily table uses numeric `YYYY-MM-DD` dates. |
+
+### Additional selected prompts
+
+- “Remove word ‘activity 01’ … on the page.”
+- “Each time the user starts a break, the sentence would change to another sentence (changing between the 4 options).”
+- “I think ‘Your next pause for tired eyes’ is good. Let's change it to this sentence.”
+- “Make the area that tracks people's break time, screen time and time recorded … an aesthetic bar chart.”
+- “The date should be in English … keep all text on this page in English.”
+
+## Saved project and repository
+
+The maintained project folder is **`activity-1`**. It is connected to [Qilin_5003_5013 on GitHub](https://github.com/chen13711380988-coder/Qilin_5003_5013/tree/main/activity-1), on the `main` branch. Use this folder for the current source, README, tests, and bundled assets. The repository's top-level README is separate from this project README.
+
+Time-history records are browser data, not source files, and are intentionally not uploaded to GitHub. The reflection below remains for the project author to write.
 
 ## My reflection
 
